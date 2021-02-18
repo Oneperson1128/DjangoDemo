@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', views.login),
     url(r'^login_action/', views.login_action),
-    url(r'^event_manage/', views.event_manage)
+    url(r'^event_manage/', views.event_manage),
+    url(r'^accounts/login/$', views.login),
 ]

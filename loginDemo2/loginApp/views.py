@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
@@ -31,5 +32,6 @@ def login_action(request):
         '''
 
 
+@login_required
 def event_manage(request):
     return render(request, 'event_manage.html')

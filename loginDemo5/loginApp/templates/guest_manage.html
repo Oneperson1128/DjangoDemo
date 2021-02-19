@@ -11,18 +11,18 @@
 			<div class="container">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="/event_manage/">
-						发布会管理系统
+						Guest Manage System
 					</a>
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active">
-							<a href="#">
+						<li>
+							<a href="/event_manage/">
 								发布会
 							</a>
 						</li>
-						<li>
-							<a href="/guest_manage/">
+						<li class="active">
+							<a href="#">
 								嘉宾
 							</a>
 						</li>
@@ -42,19 +42,7 @@
 				</div>
 			</div>
 		</nav>
-		<!--发布会搜索表单-->
-		<div class="page-header" style="padding-top: 60px;">
-			<div id="navbar" class="navbar-collapse collapse">
-				<form class="navbar-form" method="get" action="/search_name/">
-					<div class="form-group">
-						<input name="name" type="text" placeholder="名称" class="form-control">
-					</div>
-					<button type="submit" class="btn btn-success">
-						搜索
-					</button>
-				</form>
-			</div>
-		</div>
+		<!-- 嘉宾列表 -->
 		<div class="row" style="padding-top: 80px;">
 			<div class="col-md-6">
 				<table class="table table-striped">
@@ -67,33 +55,39 @@
 								名称
 							</th>
 							<th>
-								状态
+								手机
 							</th>
 							<th>
-								地址
+								Email
 							</th>
 							<th>
-								时间
+								签到
+							</th>
+							<th>
+								发布会
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						{% for event in events %}
+						{% for guest in guests %}
 						<tr>
 							<td>
-								{{ event.id }}
+								{{ guest.id }}
 							</td>
 							<td>
-								{{ event.name }}
+								{{ guest.realname }}
 							</td>
 							<td>
-								{{ event.status }}
+								{{ guest.phone }}
 							</td>
 							<td>
-								{{ event.address }}
+								{{ guest.email }}
 							</td>
 							<td>
-								{{ event.start_time }}
+								{{ guest.sign }}
+							</td>
+							<td>
+								{{ guest.event }}
 							</td>
 						</tr>
 						{% endfor %}

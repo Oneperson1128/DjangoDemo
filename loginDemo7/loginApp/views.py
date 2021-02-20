@@ -84,16 +84,27 @@ def sign_index_action(request,event_id):
     :return:
     '''
     event = get_object_or_404(Event, id=event_id)
+    '''
+    上面这句等同于：
+    from django.http import Http404
+
+    def my_view(request):
+        try:
+            obj = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            raise Http404("No MyModel matches the given query.")
+    '''
     phone = request.POST.get('phone','')
     result = Guest.objects.filter(phone = phone)
     if not result:
-        return render(request, 'sign_index.html', {'event': event, 'hint': 'phone error.'})
+        return render(request, 'sign_index.html', {'event': event, 'hint': '手机号错误.'})
     result = Guest.objects.filter(phone=phone,event_id=event_id)
+    print("结果是：",result)
     if not result:
-        return render(request, 'sign_index.html', {'event': event, 'hint': 'event id or phone error.'})
+        return render(request, 'sign_index.html', {'event': event, 'hint': '发布会或者手机号错误.'})
     result = Guest.objects.get(phone=phone,event_id=event_id)
     if result.sign:
-        return render(request, 'sign_index.html', {'event': event, 'hint': "user has sign in."})
+        return render(request, 'sign_index.html', {'event': event, 'hint': "该用户已签到过，不用重复签到."})
     else:
         Guest.objects.filter(phone=phone,event_id=event_id).update(sign = '1')
-    return render(request, 'sign_index.html', {'event': event, 'hint':'sign in success!', 'guest': result})
+    return render(request, 'sign_index.html', {'event': event, 'hint':'签到成功!', 'guest': result})

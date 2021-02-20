@@ -108,3 +108,18 @@ def sign_index_action(request,event_id):
     else:
         Guest.objects.filter(phone=phone,event_id=event_id).update(sign = '1')
     return render(request, 'sign_index.html', {'event': event, 'hint':'签到成功!', 'guest': result})
+
+@login_required
+def search_phone(request):
+    username = request.session.get('user','')
+    search_phone = request.GET.get('phone','')
+    page = request.GET.get('page')
+    guest_list = Guest.objects.filter(phone__contains=search_phone)
+    paginator = Paginator(guest_list,2)
+    try:
+        contents = paginator.page(page)
+    except PageNotAnInteger:
+        contents = paginator.page(1)
+    except EmptyPage:
+        contents = paginator.page(paginator.num_pages)
+    return render(request,'guest_manage.html',{'user':username,'guests':contents})
